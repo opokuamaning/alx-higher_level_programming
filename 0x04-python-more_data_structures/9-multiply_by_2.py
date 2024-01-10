@@ -4,8 +4,10 @@ def multiply_by_2(a_dictionary):
         dict = {}
         tmp = {}
         for key, value in a_dictionary.items():
-            new_value = value * 2
-            tmp = {key: new_value}
+            newval = value * 2
+            tmp = {key: newval}
             dict.update(tmp)
-        return(dict)
-    return(None)
+        return (dict)
+    return None
+
+# return {key: a_dictionary[key]*2 for key in a_dictionary}

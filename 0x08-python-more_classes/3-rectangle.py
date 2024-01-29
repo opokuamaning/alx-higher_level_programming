@@ -21,7 +21,6 @@ class Rectangle:
         height(self, value)
         area(self)
         perimeter(self)
-        __str__()
     """
     def __init__(self, width=0, height=0):
         """ Initialize rectangles """
@@ -65,3 +64,14 @@ class Rectangle:
         if self.__width == 0 or self.__height == 0:
             return 0
         return (2 * self.__width) + (2 * self.__height)
+
+    def __str__(self):
+        """Prints a rectangle with #'s"""
+        rect = ""
+        if self.__width == 0 or self.height == 0:
+            return rect
+
+        for i in range(self.__height):
+            rect += ("#" * self.__width) + "\n"
+
+        return rect[:-1]

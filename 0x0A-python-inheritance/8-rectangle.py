@@ -1,47 +1,30 @@
 #!/usr/bin/python3
 """
-Module 6-base_geometry
+Module 8-rectangle
 
-Contains empty class BaseGeometry
+Contains parent class BaseGeometry
 with public instance method area and integer_validator
 
-Contains sub class Rectagle
-with attributes widht and height, validate by parents
+Contains subclass Rectangle
+with instantiation of private attributes width and height, validated by parent
 """
 
 
-class BaseGeometry:
-    """
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+
+class Rectangle(BaseGeometry):
+    """inherits from BaseGeometry
     Methods:
-        area(self)
-        integer_validator(self, name, value)
+        __init__(self, width, height)
     """
-    def area(self):
-        """
-        return: not implemented
-        """
-        raise Exception("area() is not implemented")
-
-    def integer_validator(self, name, value):
-        """
-        validates input
+    def __init__(self, width, height):
+        """validate and initialize width and height
         Args:
-            name (str): string
-            value (int): greater than 0
+            width (int): private
+            height (int): private
         """
-        if not isinstance(value, int):
-            raise TypeError("{:s} must be an integer".format(name))
-        if value <= 0:
-            raise ValueError("{:s}  must be greater than 0".format(name))
-
-        def __init__(self, width, height):
-            """
-            validate and initialize widht and height
-            Args:
-                width (int): private
-                height (int): private
-            """
-            super().integer_validator("width", width)
-            self.width = width
-            super().integer_validator("height", height)
-            self.height = height
+        super().integer_validator("width", width)
+        self.__width = width
+        super().integer_validator("height", height)
+        self.__height = height

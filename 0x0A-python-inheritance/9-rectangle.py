@@ -2,8 +2,12 @@
 """
 Module 6-base_geometry
 
-Contains empty class BaseGeometryi
+Contains empty class BaseGeometry
 with public instance method area and integer_validator
+
+Contains sub class Rectagle
+with attributes widht and height, validate by parents
+extends parents area method and prints with __str__
 """
 
 
@@ -26,7 +30,19 @@ class BaseGeometry:
             name (str): string
             value (int): greater than 0
         """
-        if type(value) is not int:
+        if not isinstance(value, int):
             raise TypeError("{:s} must be an integer".format(name))
         if value <= 0:
             raise ValueError("{:s}  must be greater than 0".format(name))
+
+        def __init__(self, width, height):
+            """
+            validate and initialize widht and height
+            Args:
+                width (int): private
+                height (int): private
+            """
+            super().integer_validator("width", width)
+            self.width = width
+            super().integer_validator("height", height)
+            self.height = height

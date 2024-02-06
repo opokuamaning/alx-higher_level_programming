@@ -1,11 +1,5 @@
-#!/bin/usr/python3
-"""
-Module BaseGeometry
-
-contains and empty class BaseGeometry
-"""
-
-
+#!/usr/bin/python3
 class BaseGeometry:
-    """Returns an empty class"""
+    """Type class of BaseGeometry"""
+
     pass

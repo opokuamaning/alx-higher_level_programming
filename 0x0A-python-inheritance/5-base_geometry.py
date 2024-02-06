@@ -2,11 +2,10 @@
 """
 Module BaseGeometry
 
-Return:
-    return empty class
+contains and empty class BaseGeometry
 """
 
 
 class BaseGeometry:
-    """Return an empty class"""
+    """Returns an empty class"""
     pass

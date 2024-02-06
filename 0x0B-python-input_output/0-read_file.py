@@ -4,7 +4,6 @@ Contains a funtion that reads and prints content in a file
 """
 
 
-
 def read_file(filename=""):
     """
     Read and print text froma file

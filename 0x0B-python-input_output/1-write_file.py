@@ -8,5 +8,5 @@ def write_file(filename="", text=""):
     """
     Return number of lines in text file
     """
-    with open(filename, mode="w", encoding="utf-8") as f:
-        return(f.write(text))
+    with open(filename, 'w', encoding="UTF-8") as f:
+        return f.write(text)

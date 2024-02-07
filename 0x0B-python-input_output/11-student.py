@@ -40,10 +40,8 @@ class Student():
                 if att in self.__dict__.keys():
                     dic[att] = self.__dict__[att]
             return dic
-
+    
     def reload_from_json(self, json):
-    """
-    t replaces all attributes of the Student instance
-    """
-        for i, j in json.items():
-            setattr(self, i, j)
+
+        for k, v in json.items():
+            setattr(self, k, v)

@@ -1,24 +1,27 @@
 #!/usr/bin/python3
 """
-A class Student
-Instantiates first_name, last_name and age
-and has public method def to_json(self):
-that retrieves a dictionary representation of a Student instance
+Module 12-student
+
+Contains class Student
+that initializes public instance attributes first_name, last_name, and age,
+and has public method to_json that returns dictionary representation
+of requested attributes or all if none were requested
 """
 
 
 class Student():
     """
-    Public attributes:
+    Public Attributes:
         first_name
         last_name
         age
+
     Public Methods:
-        to_json
+        to_json: retrieves its dictionary representation
     """
     def __init__(self, first_name, last_name, age):
         """
-        Initialises student with full name and age
+        Initializes student with full name and age
         """
         self.first_name = first_name
         self.last_name = last_name
@@ -26,12 +29,14 @@ class Student():
 
     def to_json(self, attrs=None):
         """
-        retrieves a dictionary representation of a Student instance
+        Returns dictionary description with simple data structure
+        (list, dictionary, dictionary, string)
+        for JSON serialization of an object
 
         Return:
-             only attribute names contained in this list
+            Only return dict of attrs given to us
+            Return entire dict if no attrs given
         """
-
         if attrs is None:
             return self.__dict__
         else:
@@ -40,8 +45,11 @@ class Student():
                 if att in self.__dict__.keys():
                     dic[att] = self.__dict__[att]
             return dic
-    
-    def reload_from_json(self, json):
 
+    def reload_from_json(self, json):
+        """
+        Return:
+            Transfer all attributes of json to self
+        """
         for k, v in json.items():
             setattr(self, k, v)

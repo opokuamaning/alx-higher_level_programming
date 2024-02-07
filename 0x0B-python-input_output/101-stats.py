@@ -1,49 +1,76 @@
 #!/usr/bin/python3
-"""
-Script reads stdin line by line and computes metrics
+"""Reads from standard input and computes metrics"""
 
-Input format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
+from typing import Dict, List, Tuple
 
-Each 10 lines and after a keyboard interruption (CTRL + C),
-prints those statistics since the beginning:
-total file size and
-possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
-
-format: File size: <total size>
-format: <status code (in ascending order)>: <number>
-"""
+VALID_CODES = {"200", "301", "400", "401", "403", "404", "405", "500"}
 
 
-import sys
+def print_stats(size: int, status_codes: Dict[str, int]) -> None:
+    """
+    Print accumulated metrics.
+
+    Args:
+        size (int): Total file size.
+        status_codes (Dict[str, int]): Dictionary containing status codes
+        and their counts.
+    """
+    print("File size: {}".format(size))
+    for key in sorted(status_codes):
+        print("{}: {}".format(key, status_codes[key]))
 
 
-def print_size_and_codes(size, stat_codes):
-    print("File size: {:d}".format(size))
-    for k, v in sorted(stat_codes.items()):
-        if v:
-            print("{:s}: {:d}".format(k, v))
+def process_line(
+    line: List[str], size: int, status_codes: Dict[str, int]
+) -> Tuple[int, Dict[str, int]]:
+    """
+    Process a single line and update metrics.
+
+    Args:
+        line (List[str]): List of strings representing a line.
+        size (int): Current total file size.
+        status_codes (Dict[str, int]): Dictionary containing status codes
+        and their counts.
+
+    Returns:
+        Tuple[int, Dict[str, int]]: Updated size and status_codes.
+    """
+    try:
+        size += int(line[-1])
+    except (IndexError, ValueError):
+        pass
+
+    try:
+        if line[-2] in VALID_CODES:
+            status_codes[line[-2]] = status_codes.get(line[-2], 0) + 1
+    except IndexError:
+        pass
+
+    return size, status_codes
 
 
-def parse_stdin_and_compute():
+def process_input() -> None:
+    """Reads from standard input, processes lines, and prints metrics."""
     size = 0
-    lines = 0
-    stat_codes = {"200": 0, "301": 0, "400": 0, "401": 0,
-                  "403": 0, "404": 0, "405": 0, "500": 0}
+    status_codes: Dict[str, int] = {}
+    count = 0
+
     try:
         for line in sys.stdin:
-            fields = list(map(str, line.strip().split(" ")))
-            size += int(fields[-1])
-            if fields[-2] in stat_codes:
-                stat_codes[fields[-2]] += 1
-            lines += 1
-            if lines % 10 == 0:
-                print_size_and_codes(size, stat_codes)
+            count = (count + 1) % 10
+            size, status_codes = process_line(line.split(), size, status_codes)
+
+            if count == 0:
+                print_stats(size, status_codes)
+
+        print_stats(size, status_codes)
+
     except KeyboardInterrupt:
-        print_size_and_codes(size, stat_codes)
+        print_stats(size, status_codes)
         raise
 
-    print_size_and_codes(size, stat_codes)
 
+if __name__ == "__main__":
+    import sys
 
-parse_stdin_and_compute()
+    process_input()
